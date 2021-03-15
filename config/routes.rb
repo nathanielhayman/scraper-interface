@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
   ## Tasks
   get "/tasks",           to: "dashboard#show"
-  get "/tasks/show/:id",  to: "tasks#show", as: :task
-  get "/tasks/edit/:id",  to: "tasks#edit", as: :edit_task
+  get "/tasks/show/:short",  to: "tasks#show", as: :task
+  get "/tasks/edit/:short",  to: "tasks#edit", as: :edit_task
   get "/tasks/new",       to: "tasks#new", as: :new_task
-  post "/tasks/edit/:id", to: "tasks#update", as: :update_task
+  post "/tasks/edit/:short", to: "tasks#update", as: :update_task
   post "/tasks",          to: "tasks#create", as: :create_task
 end

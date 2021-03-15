@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 
   def show
     @tasks = Task.all
-    @task = Task.find_by(short: params[:id])
+    @task = Task.find_by(short: params[:short])
   end
 
   def new
@@ -15,7 +15,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.save
       flash[:success] = 'Task created.'
-      redirect_to task_path(@task)
+      redirect_to "/tasks"
     else
       render :edit
     end
@@ -23,14 +23,14 @@ class TasksController < ApplicationController
 
   def edit
     @tasks = Task.all
-    @task = Task.find_by(short: params[:id])
+    @task = Task.find_by(short: params[:short])
   end
 
   def update
     @tasks = Task.all
     if @task.update_attributes(task_params)
       flash[:success] = 'Task updated.'
-      redirect_to task_path(@task)
+      redirect_to "/tasks"
     else
       render :edit
     end
