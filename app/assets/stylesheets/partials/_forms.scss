@@ -1,0 +1,14 @@
+.form-entry {
+    padding: 1rem;
+    label { font-size: 1rem; color: #bbbbbb; }
+    input { background-color: #343c47; border: none; color: #fff;}
+    input:focus { outline:none; }
+}
+
+.form-box {
+    color: #fff;
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    p { font-size: 1rem; color: #bbbbbb; }
+    padding: 2rem;
+}

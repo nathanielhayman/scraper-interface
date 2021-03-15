@@ -1,14 +1,12 @@
-<div class="footer">
+<footer class="footer">
     <div class="f-grid" id="running-tasks">
         <div class="f-grid-element-r"><h1>Running:</h1></div>
-        <div class="f-grid-element"><a href="#">Test1</a></div>
-        <div class="f-grid-element"><a href="#">Test2</a></div>
-        <div class="f-grid-element"><a href="#">Test3</a></div>
+        <% @tasks.each do |task| %>
+            <div class="f-grid-element"><a href="/tasks/show/<%= task.short %>"><%= task.title %></a></div>
+        <% end %>
     </div>
+    <div class="f-divider"></div>
     <div class="f-grid" id="stopped-tasks">
         <div class="f-grid-element-e"><h1>Exited:</h1></div>
-        <div class="f-grid-element"><a href="#">Test1</a></div>
-        <div class="f-grid-element"><a href="#">Test2</a></div>
-        <div class="f-grid-element"><a href="#">Test3</a></div>
     </div>
-</div>
+</footer>

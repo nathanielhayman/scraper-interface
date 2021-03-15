@@ -9,7 +9,7 @@
 
 .sd-card {
     background-color: #343c47;
-    border-radius: 1rem;
+    border-radius: .8rem;
     margin: auto;
     text-align: center;
     color: #fff;
@@ -33,11 +33,7 @@
     background-color: #2e3742;
 }
 
-.sd-new {
-    @extend .sd-card;
-}
-
-.sd-i-online {
+.sd-i-running {
     border-radius: 50%;
     background-color: rgb(85, 228, 104);
     width: .6rem;
@@ -49,7 +45,7 @@
 }
 
 .sd-i-exited {
-    @extend .sd-i-online;
+    @extend .sd-i-running;
     background-color: rgb(240, 98, 54);
 }
 
@@ -62,7 +58,7 @@
     background:
         linear-gradient(#fff,#fff),
         linear-gradient(#fff,#fff),
-        rgb(124, 214, 88);
+        rgb(85, 228, 104);
     background-position:center;
     background-size: 50% 2px,2px 50%; /*thickness = 2px, length = 50% (25px)*/
     background-repeat:no-repeat;

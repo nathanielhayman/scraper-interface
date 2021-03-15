@@ -1,0 +1,25 @@
+<%= form_for @task, html: { multipart: true, class: "full-page" } do |f| %>
+    <div class="form-entry">
+        <%= f.label :title, "Title" %><br>
+        <%= f.text_field :title %>
+    </div>
+    <div class="form-entry">
+        <%= f.label :description, "Description" %><br>
+        <%= f.text_field :description %>
+    </div>
+    <div class="form-entry">
+        <%= f.label :short, "Short Title" %><br>
+        <%= f.text_field :short %>
+    </div>
+    <div class="form-entry">
+        <%= f.label :time, "Time" %><br>
+        <%= f.date_field :time %>
+    </div>
+    <div class="form-entry">
+        <%= f.label :regularity, "Regularity" %><br>
+        <%= f.text_field :regularity %>
+    </div>
+    <div class="form-entry">
+        <div class="submit"><%= f.submit "Submit", id: "form-submit-btn", class: "button", data: { disable_with: 'Submitting...' } %></div>
+    </div>
+<% end %>

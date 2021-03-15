@@ -1,28 +1,20 @@
 <div class="sd-grid">
     <div class="sd-elm">
-        <div class="sd-new">
+        <div class="sd-card">
             <p>Create a new task</p>
-            <a href="#"><div class="sd-plus"></div></a>
+            <a href="/tasks/new"><div class="sd-plus"></div></a>
         </div>
     </div>
-    <a href="#"><div class="sd-elm">
-        <div class="sd-card">
-            <div class="sd-i-online"></div>
-            <h1><i class="fas fa-globe"></i></h1>
-            <h2>Example Task</h2>
-            <p>This task does stuff</p>
-            <div class="sd-br"></div>
-            <p><i class="far fa-clock"></i> 10:00:00 PM, Daily</p>
-        </div>
-    </div></a>
-    <a href="#"><div class="sd-elm">
-        <div class="sd-card">
-            <div class="sd-i-exited"></div>
-            <h1><i class="fas fa-globe"></i></h1>
-            <h2>Example Task</h2>
-            <p>This task does stuff</p>
-            <div class="sd-br"></div>
-            <p><i class="far fa-clock"></i> 10:00:00 PM, Daily</p>
-        </div>
-    </div></a>
+    <% @tasks.each do |task| %>
+        <a href="/tasks/show/<%= task.id %>"><div class="sd-elm">
+            <div class="sd-card">
+                <div class="sd-i-running"></div>
+                <h1><i class="fas fa-globe"></i></h1>
+                <h2><%= task.title %></h2>
+                <p><%= task.description %></p>
+                <div class="sd-br"></div>
+                <p><i class="far fa-clock"></i> <%= task.time %>, <%= task.regularity %></p>
+            </div>
+        </div></a>
+    <% end %>
 </div>
