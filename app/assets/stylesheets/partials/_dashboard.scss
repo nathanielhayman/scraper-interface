@@ -1,0 +1,77 @@
+.sd-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sd-elm {
+    padding: 1rem;
+}
+
+.sd-card {
+    background-color: #343c47;
+    border-radius: 1rem;
+    margin: auto;
+    text-align: center;
+    color: #fff;
+    padding: 1rem;
+    position: relative;
+    h1 {
+        font-size: 3rem;
+        margin: 0;
+    }
+    h2 {
+        font-size: 1rem;
+        margin: .5rem;
+    }
+    p {
+        font-size: .8rem;
+        color: #bbbbbb;
+    }
+}
+
+.sd-card:hover {
+    background-color: #2e3742;
+}
+
+.sd-new {
+    @extend .sd-card;
+}
+
+.sd-i-online {
+    border-radius: 50%;
+    background-color: rgb(85, 228, 104);
+    width: .6rem;
+    height: .6rem;
+    overflow: hidden;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+}
+
+.sd-i-exited {
+    @extend .sd-i-online;
+    background-color: rgb(240, 98, 54);
+}
+
+.sd-plus {
+    display:inline-block;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    
+    background:
+        linear-gradient(#fff,#fff),
+        linear-gradient(#fff,#fff),
+        rgb(124, 214, 88);
+    background-position:center;
+    background-size: 50% 2px,2px 50%; /*thickness = 2px, length = 50% (25px)*/
+    background-repeat:no-repeat;
+}
+
+.sd-br {
+    height: .1rem;
+    width: 100%;
+    background-color: #505966;
+    padding: 0;
+    margin: 0;
+}

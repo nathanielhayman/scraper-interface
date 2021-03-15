@@ -1,0 +1,28 @@
+.footer {
+    background-color: #20282c;
+    color: rgb(97, 97, 97);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.f-grid {
+    display: flex;
+    flex-wrap: wrap;
+    a { color: rgb(97, 97, 97); text-decoration: none; }
+}
+
+.f-grid-element {
+    font-size: 1rem;
+    padding: 1rem;
+}
+
+.f-grid-element-r {
+    @extend .f-grid-element;
+    h1 { color:rgb(85, 228, 104); font-size: 1rem; margin: 0; }
+}
+
+.f-grid-element-e {
+    @extend .f-grid-element-r;
+    h1 { color:rgb(240, 98, 54); }
+}
