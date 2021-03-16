@@ -1,9 +1,35 @@
-<div class="t-head">
-    <h1><i class="fas fa-globe"></i> <%= @task.title %></h1>
+<div id="t-head">
+    <div id="t-btn-b">
+        <a href="/tasks"><h1><i class="fas fa-sign-out-alt"></i></h1></a>
+    </div>
+    <div id="t-btn-e">
+        <a href="/tasks/edit/<%= @task.short %>"><h1><i class="fas fa-pen"></i></h1></a>
+    </div>
+    <a href="#"><h1><i class="fas fa-globe"></i> <%= @task.title %></h1></a>
     <p><%= @task.description %></p>
-    <% @task.task_methods.each do |method| %>
-        <p><%= method.action %></p>
-        <p><%= method.delay %></p>
-        <p><%= method.action_type %></p>
-    <% end %>
+</div>
+<div id="t-body">
+    <div class="t-grid">
+        <% @task.task_methods.each do |method| %>
+            <div class="t-elm">
+                <div class="method-card">
+                    <% if method.action_type === "GET" %>
+                        <h1><i class="fas fa-link"></i>
+                    <% elsif method.action_type === "find" %>
+                        <h1><i class="fas fa-search"></i>
+                    <% else %>
+                        <h1><i class="far fa-question-circle"></i>
+                    <% end %>
+                    <%= method.action_type %></h1>
+                    <h2><%= method.action %></h2>
+                    <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
+                </div>
+            </div>
+            <% if method != @task.task_methods.last %>
+                <div class="t-elm">
+                    <h1><i class="fas fa-arrow-right"></i></h1>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
 </div>

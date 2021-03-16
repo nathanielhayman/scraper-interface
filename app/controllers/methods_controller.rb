@@ -7,7 +7,7 @@ class MethodsController < ApplicationController
   def new
     @tasks = Task.all
     @task = Task.find_by(short: params[:short])
-    @method = @task.task_methods.create()
+    @method = @task.task_methods.new()
   end
 
   def edit
@@ -17,7 +17,7 @@ class MethodsController < ApplicationController
   def create
     @tasks = Task.all
     @task = Task.find_by(short: params[:short])
-    @method = @task.task_methods.create(params[:task_method].permit(:action_type, :action, :delay))
+    @method = @task.task_methods.new(task_method_params)
     if @method.save
       redirect_to "/tasks/show/#{@task.short}"
     else
@@ -26,5 +26,9 @@ class MethodsController < ApplicationController
   end
 
   def update
+  end
+
+  def task_method_params
+    params.require(:task_method).permit(:action_type, :action, :delay)
   end
 end
