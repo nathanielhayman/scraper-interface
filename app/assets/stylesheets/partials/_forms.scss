@@ -1,8 +1,10 @@
 .form-entry {
     padding: 1rem;
     label { font-size: 1rem; color: #bbbbbb; }
-    input { background-color: #343c47; border: none; color: #fff;}
+    input { background-color: #343c47; border: none; color: #fff; width: 20%; }
+    textarea { background-color: #343c47; border: none; color: #fff; width: 20%; }
     input:focus { outline:none; }
+    textarea:focus { outline:none; }
 }
 
 .form-box {

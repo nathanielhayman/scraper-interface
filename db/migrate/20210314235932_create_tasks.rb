@@ -6,7 +6,7 @@ class CreateTasks < ActiveRecord::Migration[6.1]
       t.string :short
       t.datetime :time
       t.string :regularity
-      t.string :status
+      t.string :status, :default => "Running"
 
       t.timestamps
     end

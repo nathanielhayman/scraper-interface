@@ -1,20 +1,27 @@
+<%= javascript_pack_tag 'dashboard' %>
 <div class="sd-grid">
     <div class="sd-elm">
-        <div class="sd-card">
+        <div id="sd-card">
             <p>Create a new task</p>
             <a href="/tasks/new"><div class="sd-plus"></div></a>
         </div>
     </div>
     <% @tasks.each do |task| %>
-        <a href="/tasks/show/<%= task.short %>"><div class="sd-elm">
-            <div class="sd-card">
-                <div class="sd-i-running"></div>
+        <div class="sd-elm">
+            <a href="tasks/show/<%= task.short %>"><div id="sd-card">
+                <div id="sd-i-starred" <% if task.starred === nil || task.starred === false %>style="display: none;"<% end %>><i class="fas fa-star"></i></div>
+                <div id="sd-i-empty" <% if task.starred? %>style="display: none;"<% end %>><i class="far fa-star"></i></div>
+                <% if task.status === "Running" %>
+                    <div id="sd-i-running"></div>
+                <% else %>
+                    <div id="sd-i-running"></div>
+                <% end %>
                 <h1><i class="fas fa-globe"></i></h1>
                 <h2><%= task.title %></h2>
                 <p><%= task.description %></p>
                 <div class="sd-br"></div>
                 <p><i class="far fa-clock"></i> <%= task.time %>, <%= task.regularity %></p>
-            </div>
-        </div></a>
+            </div></a>
+        </div>
     <% end %>
 </div>

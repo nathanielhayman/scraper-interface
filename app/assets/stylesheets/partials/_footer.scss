@@ -1,12 +1,16 @@
 .footer {
     background-color: #20282c;
     color: rgb(97, 97, 97);
-    position: absolute;
+    position: fixed;
+    left: 0;
     bottom: 0;
     width: 100%;
+    height: 6.9rem;
+    text-align: center;
 }
 
 .f-grid {
+    padding-left: 1rem;
     display: flex;
     flex-wrap: wrap;
     a { color: rgb(97, 97, 97); text-decoration: none; }

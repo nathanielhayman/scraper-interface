@@ -7,8 +7,9 @@
     padding: 1rem;
 }
 
-.sd-card {
-    background-color: #343c47;
+#sd-card {
+    background-color:#313b47;
+    box-shadow: 0 0 6px rgb(29, 29, 29);
     border-radius: .8rem;
     margin: auto;
     text-align: center;
@@ -29,11 +30,11 @@
     }
 }
 
-.sd-card:hover {
-    background-color: #2e3742;
+#sd-card:hover {
+    background-color: #374453;
 }
 
-.sd-i-running {
+#sd-i-running {
     border-radius: 50%;
     background-color: rgb(85, 228, 104);
     width: .6rem;
@@ -44,9 +45,40 @@
     right: 5%;
 }
 
-.sd-i-exited {
-    @extend .sd-i-running;
+#sd-i-exited {
+    @extend #sd-i-running;
     background-color: rgb(240, 98, 54);
+}
+
+#sd-i-starred {
+    overflow: hidden;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-size: 1rem;
+    background: -webkit-linear-gradient(#ffaa3b, #ffcb3b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#sd-i-starred:hover {
+    font-size: 1.1rem;
+}
+
+#sd-i-empty {
+    overflow: hidden;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-size: 1rem;
+    color: #bbbbbb;
+}
+
+#sd-i-empty:hover {
+    font-size: 1.1rem;
+    background: -webkit-linear-gradient(#ffaa3b, #ffcb3b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .sd-plus {

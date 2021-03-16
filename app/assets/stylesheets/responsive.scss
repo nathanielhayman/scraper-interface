@@ -2,6 +2,7 @@
 @import "partials/head";
 @import "partials/footer";
 @import "partials/forms";
+@import "partials/tasks";
 
 * {
     font-family: -apple-system,BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
@@ -19,4 +20,8 @@ a:visited,
 a:hover,
 a:active{
     text-decoration: none;
+}
+
+#content-display {
+    padding-bottom: 6.9rem;
 }

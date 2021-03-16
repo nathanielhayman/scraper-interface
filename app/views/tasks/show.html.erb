@@ -1,2 +1,9 @@
-
-<h1><%= @task.title %></h1>
+<div class="t-head">
+    <h1><i class="fas fa-globe"></i> <%= @task.title %></h1>
+    <p><%= @task.description %></p>
+    <% @task.task_methods.each do |method| %>
+        <p><%= method.action %></p>
+        <p><%= method.delay %></p>
+        <p><%= method.action_type %></p>
+    <% end %>
+</div>
