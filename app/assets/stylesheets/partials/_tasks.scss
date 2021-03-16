@@ -33,6 +33,17 @@
     right: 4rem;
 }
 
+.t-activity-bar-idle {
+    height: .1rem;
+    border-radius: 1rem;
+    background-color: #ffba25;
+}
+
+.t-activity-bar-active {
+    @extend .t-activity-bar-idle;
+    background-color: rgb(85, 228, 104);
+}
+
 .t-grid {
     display: flex;
     flex-wrap: wrap;
