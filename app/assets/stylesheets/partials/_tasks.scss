@@ -75,7 +75,11 @@
     margin-top: auto;
     margin-bottom: auto;
     padding: 1rem;
-    h1 { font-size: 3rem; color: #fff; }
+}
+
+.t-elm-arrow {
+    @extend .t-elm;
+    h1 { font-size: 3rem; color: #bbbbbb; }
 }
 
 .method-card {
@@ -97,5 +101,18 @@
     p {
         font-size: .8rem;
         color: #bbbbbb;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .t-elm-arrow {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .t-elm {
+        margin: auto;
+        text-align: center;
     }
 }

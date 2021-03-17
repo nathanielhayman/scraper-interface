@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
-
+  skip_before_action :verify_authenticity_token
+  
   def show
     @tasks = Task.all
     @task = Task.find_by(short: params[:short])

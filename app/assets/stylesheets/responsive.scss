@@ -11,7 +11,10 @@
 body {
     background-color: #272c2e;
     margin: 0 !important;
-    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 6.9rem;
 }
 
 a,
@@ -20,8 +23,4 @@ a:visited,
 a:hover,
 a:active{
     text-decoration: none;
-}
-
-#content-display {
-    padding-bottom: 6.9rem;
 }
