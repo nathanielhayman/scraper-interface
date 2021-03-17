@@ -12,11 +12,15 @@
     <div class="t-grid">
         <% @task.task_methods.each do |method| %>
             <div class="t-elm">
-                <div class="method-card">
+                <a href="/tasks/edit/<%= @task.short %>/methods/edit/<%= method.id %>"><div class="method-card">
                     <% if method.action_type === "GET" %>
                         <h1><i class="fas fa-link"></i>
                     <% elsif method.action_type === "find" %>
                         <h1><i class="fas fa-search"></i>
+                    <% elsif method.action_type === "click" %>
+                        <h1><i class="fas fa-hand-pointer"></i>
+                    <% elsif method.action_type === "email" %>
+                        <h1><i class="fas fa-envelope"></i>
                     <% else %>
                         <h1><i class="far fa-question-circle"></i>
                     <% end %>
@@ -24,7 +28,7 @@
                     <h2><%= method.action %></h2>
                     <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
                     <div class="t-activity-bar-idle"></div>
-                </div>
+                </div></a>
             </div>
             <% if method != @task.task_methods.last %>
                 <div class="t-elm">
@@ -32,5 +36,8 @@
                 </div>
             <% end %>
         <% end %>
+        <div class="t-elm" style="margin-up: auto; margin-down: auto;">
+            <a href="/tasks/edit/<%= @task.short %>/methods/new"><div id="t-plus"></div></a>
+        </div>
     </div>
 </div>

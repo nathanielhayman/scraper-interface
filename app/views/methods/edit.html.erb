@@ -1,4 +1,7 @@
-<%= render "shared/error_messages", target: @task %>
+<%= render "shared/error_messages", target: @method %>
+<div id="t-btn-b">
+    <a href="/tasks/show/<%= @task.short %>"><h1><i class="fas fa-sign-out-alt"></i></h1></a>
+</div>
 <div class="form-box">
     <h1>Edit Method</h1>
     <%= render "form" %>

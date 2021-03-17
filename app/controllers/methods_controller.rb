@@ -11,7 +11,9 @@ class MethodsController < ApplicationController
   end
 
   def edit
-
+    @tasks = Task.all
+    @task = Task.find_by(short: params[:short])
+    @method = @task.task_methods.find_by(id: params[:id])
   end
 
   def create
@@ -26,6 +28,15 @@ class MethodsController < ApplicationController
   end
 
   def update
+    @tasks = Task.all
+    @task = Task.find_by(short: params[:short])
+    @method = @task.task_methods.find_by(id: params[:id])
+    if @method.update(task_method_params)
+      flash[:success] = 'Method updated.'
+      redirect_to "/tasks"
+    else
+      render :edit
+    end
   end
 
   def task_method_params
