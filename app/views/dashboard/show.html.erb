@@ -8,20 +8,22 @@
     </div>
     <% @tasks.each do |task| %>
         <div class="sd-elm">
-            <a href="tasks/show/<%= task.short %>"><div id="sd-card">
-                <div id="sd-i-starred" <% if task.starred === nil || task.starred === false %>style="display: none;"<% end %>><i class="fas fa-star"></i></div>
-                <div id="sd-i-empty" <% if task.starred? %>style="display: none;"<% end %>><i class="far fa-star"></i></div>
-                <% if task.status === "Running" %>
-                    <div id="sd-i-running"></div>
-                <% else %>
-                    <div id="sd-i-running"></div>
-                <% end %>
-                <h1><i class="fas fa-globe"></i></h1>
-                <h2><%= task.title %></h2>
-                <p><%= task.description %></p>
-                <div class="sd-br"></div>
-                <p><i class="far fa-clock"></i> <%= task.time %>, <%= task.regularity %></p>
-            </div></a>
+            <div class="sd-card-container">
+                <div id="<%= task.short %>-filled-star" class="sd-i-starred" <% if task.starred === nil || task.starred === false %>style="display: none;"<% end %>><i class="fas fa-star"></i></div>
+                <div id="<%= task.short %>-empty-star" class="sd-i-empty" <% if task.starred? %>style="display: none;"<% end %>><i class="far fa-star"></i></div>
+                <a href="tasks/show/<%= task.short %>"><div id="sd-card">
+                    <% if task.status === "Running" %>
+                        <div id="sd-i-running"></div>
+                    <% else %>
+                        <div id="sd-i-running"></div>
+                    <% end %>
+                    <h1><i class="fas fa-globe"></i></h1>
+                    <h2><%= task.title %></h2>
+                    <p><%= task.description %></p>
+                    <div class="sd-br"></div>
+                    <p><i class="far fa-clock"></i> <%= task.time %>, <%= task.regularity %></p>
+                </div></a>
+            </div>
         </div>
     <% end %>
 </div>
