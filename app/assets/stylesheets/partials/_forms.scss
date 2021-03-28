@@ -1,16 +1,30 @@
 .form-entry {
     padding: 1rem;
-    label { font-size: 1rem; color: #bbbbbb; }
-    input { background-color: #343c47; border: none; color: #fff; width: 20%; }
-    textarea { background-color: #343c47; border: none; color: #fff; width: 20%; }
+    label { font-size: 1rem; color: #bbbbbb; padding-left: .4rem; }
+    input { background-color: #343c47; border: none; color: #fff; width: 100%;
+            border-radius: 1rem; padding: .45rem;
+            .form-btn { background-color: #bbbbbb; } }
+    textarea { background-color: #343c47; border: none; color: #fff; width: 100%;
+               border-radius: 1rem; padding: .3rem; }
+    select { background-color: #343c47; border: none; color: #fff; width: 100%; 
+             border-radius: 1rem; padding: .3rem; }
+    select:focus { outline:none; }
     input:focus { outline:none; }
     textarea:focus { outline:none; }
 }
 
 .form-box {
+    max-width: 20rem;
     color: #fff;
-    h1 { font-size: 2rem; }
+    h1 { font-size: 2rem; padding-left: 1rem; }
     h2 { font-size: 1.5rem; }
     p { font-size: 1rem; color: #bbbbbb; }
     padding: 2rem;
+}
+
+.form-btn {
+    cursor: pointer !important;
+    margin: auto;
+    text-align: center;
+    width: 50%;
 }

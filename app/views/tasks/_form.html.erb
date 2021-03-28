@@ -12,7 +12,7 @@
         <%= f.text_field :short %>
     </div>
     <div class="form-entry">
-        <%= f.label :time, "Time" %><br>
+        <%= f.label :time, "Next Execution" %><br>
         <%= f.date_field :time %>
     </div>
     <div class="form-entry">
@@ -20,6 +20,6 @@
         <%= f.text_field :regularity %>
     </div>
     <div class="form-entry">
-        <div class="form-btn"><%= f.submit "Submit", id: "form-submit-btn", class: "button", data: { disable_with: 'Submitting...' } %></div>
+        <div class="form-btn"><%= f.submit "Submit", id: "form-submit-btn", class: "form-btn", data: { disable_with: 'Submitting...' } %></div>
     </div>
 <% end %>

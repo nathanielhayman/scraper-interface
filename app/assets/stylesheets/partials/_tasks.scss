@@ -55,7 +55,7 @@
 .t-activity-bar-idle {
     height: .1rem;
     border-radius: 1rem;
-    background-color: #ffba25;
+    background-color: rgb(85, 228, 104);
 }
 
 .t-activity-bar-active {
@@ -79,7 +79,7 @@
 
 .t-elm-arrow {
     @extend .t-elm;
-    h1 { font-size: 3rem; color: #bbbbbb; }
+    h1 { font-size: 2.2rem; color: #bbbbbb; }
 }
 
 .method-card {
@@ -91,11 +91,11 @@
     padding: 1.4rem;
     position: relative;
     h1 {
-        font-size: 2rem;
+        font-size: 1.6rem;
         margin: 0;
     }
     h2 {
-        font-size: 1rem;
+        font-size: .9rem;
         font-weight: lighter;
     }
     p {

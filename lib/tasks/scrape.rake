@@ -28,6 +28,8 @@ namespace :scraper do
                 end
             elsif method.action_type === "click"
                 elm.click()
+            elsif method.action_type === "type"
+                elm.send_keys(method.action)
             end
         end
 
