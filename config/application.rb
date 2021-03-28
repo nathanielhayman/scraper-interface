@@ -16,7 +16,24 @@ module Scraper
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.time_zone = "Central Time (US & Canada)"
+    config.eager_load_paths << Rails.root.join("extras")
+    
+    #if defined?(Rails::Server)
+    #  config.after_initialize do
+    #    require 'rake'
+    #
+    #    Rake::Task.clear
+    #    Scraper::Application.load_tasks
+    #
+    #    sleep(10)
+    #
+    #    while (true)
+    #      sleep(1)
+    #      Rake::Task["task_module:run"].reenable
+    #      Rake::Task["task_module:run"].invoke
+    #    end
+    #  end
+    #end
   end
 end
