@@ -38,6 +38,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def text_editor
+    @tasks = Task.all
+  end
+
   def task_params
     params.require(:task).permit(:title, :description, :short, :status, :time, :regularity)
   end

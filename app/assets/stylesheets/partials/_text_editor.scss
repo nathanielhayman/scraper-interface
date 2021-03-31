@@ -1,0 +1,14 @@
+.ztextarea {
+    height: 20rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #343c47;
+    padding: 1rem;
+
+    p { display: inline; color: #fff; }
+    tab { display: inline; color: #fff; }
+}
+
+.ztextarea:focus {
+    outline: none;
+}
