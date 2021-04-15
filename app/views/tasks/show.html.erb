@@ -1,43 +1,64 @@
+<%= javascript_pack_tag 'tasks' %>
+
 <div id="t-head">
-    <div id="t-btn-b">
-        <a href="/tasks"><h1><i class="fas fa-sign-out-alt"></i></h1></a>
-    </div>
-    <div id="t-btn-e">
-        <a href="/tasks/edit/<%= @task.short %>"><h1><i class="fas fa-pen"></i></h1></a>
-    </div>
+    <a href="/tasks"><div id="t-btn-b">
+        <h1><i class="fas fa-sign-out-alt"></i></h1>
+    </div></a>
+    <a href="/tasks/edit/<%= @task.short %>"><div id="t-btn-e">
+        <h1><i class="fas fa-pen"></i></h1>
+    </div></a>
     <a href="#"><h1><i class="fas fa-globe"></i> <%= @task.title %></h1></a>
     <p><%= @task.description %></p>
 </div>
 <div id="t-body">
-    <div class="t-grid">
-        <% @task.task_methods.each do |method| %>
-            <div class="t-elm">
-                <a href="/tasks/edit/<%= @task.short %>/methods/edit/<%= method.id %>"><div class="method-card">
-                    <% if method.action_type === "GET" %>
-                        <h1><i class="fas fa-link"></i>
-                    <% elsif method.action_type === "find" %>
-                        <h1><i class="fas fa-search"></i>
-                    <% elsif method.action_type === "click" %>
-                        <h1><i class="fas fa-hand-pointer"></i>
-                    <% elsif method.action_type === "email" %>
-                        <h1><i class="fas fa-envelope"></i>
-                    <% else %>
-                        <h1><i class="far fa-question-circle"></i>
-                    <% end %>
-                    <%= method.action_type %></h1>
-                    <h2><%= method.action %></h2>
-                    <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
-                    <div class="t-activity-bar-idle"></div>
-                </div></a>
+    <div class="t-body-main">
+        <p class="t-clock"><i class="far fa-clock"></i> <b>00:00:00</b> — <%= @task.time.strftime("%l:%M:%S %p") %> 
+            <%= @task.regularity %></p>
+        <div class="toggle-container">
+            <div class="toggle" id="t-toggle">
+                <div class="toggle-circle"></div>
             </div>
-            <% if method != @task.task_methods.last %>
-                <div class="t-elm-arrow">
-                    <h1><i class="fas fa-arrow-right"></i></h1>
+            <p class="green"><i class="fas fa-check-circle"></i> Running</p>
+        </div>
+        <table id="t-table" style="display: none;">
+            <tr>
+                <td class="left">Something</td>
+                <td class="right">Somethingagain</td>
+            </tr>
+            <tr>
+                <td>Something2</th>
+            </tr>
+        </table>
+        <div class="t-grid">
+            <% @task.task_methods.each do |method| %>
+                <div class="t-elm">
+                    <a href="/tasks/edit/<%= @task.short %>/methods/edit/<%= method.id %>"><div class="method-card">
+                        <% if method.action_type === "GET" %>
+                            <h1><i class="fas fa-link"></i>
+                        <% elsif method.action_type === "find" %>
+                            <h1><i class="fas fa-search"></i>
+                        <% elsif method.action_type === "click" %>
+                            <h1><i class="fas fa-mouse-pointer"></i>
+                        <% elsif method.action_type === "email" %>
+                            <h1><i class="fas fa-envelope"></i>
+                        <% else %>
+                            <h1><i class="far fa-question-circle"></i>
+                        <% end %>
+                        <%= method.action_type %></h1>
+                        <h2><%= method.action %></h2>
+                        <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
+                        <div class="t-activity-bar-idle"></div>
+                    </div></a>
                 </div>
+                <% if method != @task.task_methods.last %>
+                    <div class="t-elm-arrow">
+                        <h1><i class="fas fa-arrow-right"></i></h1>
+                    </div>
+                <% end %>
             <% end %>
-        <% end %>
-        <div class="t-elm" style="margin-up: auto; margin-down: auto;">
-            <a href="/tasks/edit/<%= @task.short %>/methods/new"><div id="t-plus"></div></a>
+            <div class="t-elm" style="margin-up: auto; margin-down: auto;">
+                <a href="/tasks/edit/<%= @task.short %>/methods/new"><div id="t-plus"></div></a>
+            </div>
         </div>
     </div>
 </div>
