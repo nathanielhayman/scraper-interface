@@ -1,0 +1,23 @@
+.toggle {
+    cursor: pointer;
+    position: relative;
+    border-radius: 1rem;
+    background-color: #3c454b;
+    height: 1.4rem;
+    width: 3rem;
+    transition: right 5s;
+}
+
+.toggle-container {
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+
+.toggle-circle {
+    position: absolute;
+    border-radius: 100%;
+    background-color: #b8b8b8;
+    height: 1.2rem;
+    width: 1.2rem;
+    top: .1rem;
+}
