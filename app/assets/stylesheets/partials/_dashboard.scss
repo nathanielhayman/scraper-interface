@@ -16,6 +16,7 @@
     text-align: center;
     color: #fff;
     padding: 1rem;
+    min-width: 14rem;
     h1 {
         font-size: 3rem;
         margin: 0;
@@ -27,7 +28,13 @@
     p {
         font-size: .8rem;
         color: #bbbbbb;
+        b { font-weight: normal; }
     }
+}
+
+#sd-card-small {
+    @extend #sd-card;
+    min-width: 0 !important;
 }
 
 #sd-card:hover {
