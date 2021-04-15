@@ -1,12 +1,12 @@
 require 'selenium-webdriver'
 
 def initiate(task)
+    puts "[#{Time.now}] Executing task \##{task.id} ~ #{task.short}..."
     options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'no-sandbox'])
     driver = Selenium::WebDriver.for(:chrome, options: options)
     wait = Selenium::WebDriver::Wait.new(:timeout => 10)
 
     elm = nil
-    task = Task.find_by(short: args[:task_short])
     task.task_methods.each do |method|
         sleep(method.delay)
         case method.action_type
@@ -29,6 +29,20 @@ def initiate(task)
     driver.quit
 end
 
+def run_threads(tasks) 
+    threads = []
+    tasks.each do |task|
+        threads << Thread.new { 
+            puts task.time
+            if task.time - Time.now < 1000
+                puts "#{task.time} - #{Time.now} < 1000"
+                initiate(task)
+            end
+        }
+    end
+    threads.each(&:join)
+end
+
 namespace :task_module do
 
     desc 'Scrapes and interacts with webpages based on user methods'
@@ -36,14 +50,14 @@ namespace :task_module do
 
         puts "[#{Time.now}] Running tasks..."
 
-        threads = []
-        Task.all.each do |task|
-            threads << Thread.new { 
-                if Time.now - task.time < 2
-                    initiate(task)
-                end
-            }
+        cached_tasks = Task.all
+        run_threads(cached_tasks)
+
+        while true
+            sleep(1000)
+            if Task.all != cached_tasks
+                run_threads(Task.all - cached_tasks | cached_tasks - Task.all)
+            end
         end
-        threads.each(&:join)
     end
 end
