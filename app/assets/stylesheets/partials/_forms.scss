@@ -1,13 +1,13 @@
 .form-entry {
     padding: 1rem;
-    label { font-size: 1rem; color: #bbbbbb; padding-left: .4rem; }
+    label { font-size: 1rem; color: #bbbbbb; }
     input { background-color: #343c47; border: none; color: #fff; width: 100%;
-            border-radius: 1rem; padding: .45rem;
+            border-radius: .2rem; padding: .45rem;
             .form-btn { background-color: #bbbbbb; } }
     textarea { background-color: #343c47; border: none; color: #fff; width: 100%;
-               border-radius: 1rem; padding: .3rem; }
+               border-radius: .2rem; padding: .3rem; }
     select { background-color: #343c47; border: none; color: #fff; width: 100%; 
-             border-radius: 1rem; padding: .3rem; }
+             border-radius: .2rem; padding: .3rem; }
     select:focus { outline:none; }
     input:focus { outline:none; }
     textarea:focus { outline:none; }
@@ -27,4 +27,13 @@
     margin: auto;
     text-align: center;
     width: 50%;
+}
+
+.time-selector {
+    padding-left: 1rem;
+    display: inline-block;
+    label { font-size: 1rem; color: #bbbbbb; }
+    select { background-color: #343c47; border: none; color: #fff;
+             border-radius: .2rem; padding: .3rem; }
+    select:focus { outline:none; }
 }
