@@ -1,7 +1,7 @@
 <%= javascript_pack_tag 'dashboard' %>
 <div class="sd-grid">
     <div class="sd-elm">
-        <div id="sd-card">
+        <div id="sd-card-small">
             <p>Create a new task</p>
             <a href="/tasks/new"><div class="sd-plus"></div></a>
         </div>
@@ -21,7 +21,13 @@
                     <h2><%= task.title %></h2>
                     <p><%= task.description %></p>
                     <div class="sd-br"></div>
-                    <p><i class="far fa-clock"></i> <%= task.time %>, <%= task.regularity %></p>
+                    <% if task.regularity == "Hourly" %>
+                        <p class="task-clock"><i class="far fa-clock"></i> <b>00:00:00</b> — <%= task.time.strftime("%M:%S") %> 
+                        <%= task.regularity %></p>
+                    <% else %>
+                        <p class="task-clock"><i class="far fa-clock"></i> <b>00:00:00</b> — <%= task.time.strftime("%l:%M:%S %p") %> 
+                        <%= task.regularity %></p>
+                    <% end %>
                 </div></a>
             </div>
         </div>
