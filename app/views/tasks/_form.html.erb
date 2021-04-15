@@ -12,12 +12,13 @@
         <%= f.text_field :short %>
     </div>
     <div class="form-entry">
-        <%= f.label :time, "Next Execution" %><br>
-        <%= f.date_field :time %>
-    </div>
-    <div class="form-entry">
         <%= f.label :regularity, "Regularity" %><br>
         <%= f.text_field :regularity %>
+    </div>
+    <div class="time-selector">
+        <%= f.label :time, "Next Execution" %><br>
+        <%= f.time_select :time, {:default => {:discard_hour => false, :hour => '00', :minute => '00', 
+            :second => '00'}, :include_seconds => true, :value => Time.now } %>
     </div>
     <div class="form-entry">
         <div class="form-btn"><%= f.submit "Submit", id: "form-submit-btn", class: "form-btn", data: { disable_with: 'Submitting...' } %></div>
