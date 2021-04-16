@@ -18,7 +18,7 @@ class TasksController < ApplicationController
       flash[:success] = 'Task created.'
       redirect_to "/tasks"
     else
-      render :edit
+      render :new
     end
   end
 
