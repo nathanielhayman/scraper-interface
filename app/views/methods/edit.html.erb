@@ -5,4 +5,9 @@
 <div class="form-box">
     <h1>Edit Method</h1>
     <%= render "form" %>
+    <div class="form-entry">
+        <%= button_to "/tasks/edit/#{@task.short}/methods/edit/#{@method.id}", method: :delete, id: "form-delete-btn" do %>
+            <i class="fas fa-trash"></i>
+        <% end %>
+    </div>
 </div>

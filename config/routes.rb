@@ -23,5 +23,5 @@ Rails.application.routes.draw do
   post "/tasks/edit/:short/methods/new",        to: "methods#create", as: :create_task_method
   get "/tasks/edit/:short/methods/edit/:id",    to: "methods#edit", as: :edit_task_method
   post "/tasks/edit/:short/methods/edit/:id",   to: "methods#update", as: :update_task_method
-  delete "/tasks/edit/:short/methods/edit/:id", to: "methods#destory", as: :destroy_task_method
+  delete "/tasks/edit/:short/methods/edit/:id", to: "methods#destroy", as: :destroy_task_method
 end

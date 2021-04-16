@@ -1,7 +1,7 @@
 <%= form_for @method, url: "#", method: :post, html: { multipart: true, class: "full-page" } do |f| %>
     <div class="form-entry">
         <%= f.label :action_type, "Type of Method" %><br>
-        <%= f.select :action_type, ["GET", "find", "click", "email"] %>
+        <%= f.select :action_type, ["GET", "find", "click", "save", "email"] %>
     </div>
     <div class="form-entry">
         <%= f.label :action, "Action" %><br>

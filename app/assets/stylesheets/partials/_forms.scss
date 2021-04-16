@@ -27,9 +27,12 @@
                border-radius: .2rem; padding: .3rem; }
     select { background-color: #343c47; border: none; color: #fff; width: 100%; 
              border-radius: .2rem; padding: .3rem; }
-    select:focus { outline:none; }
-    input:focus { outline:none; }
-    textarea:focus { outline:none; }
+    select:focus { outline:none; background-color: #374453; }
+    input:focus { outline:none; background-color: #374453; }
+    textarea:focus { outline:none; background-color: #374453; }
+    select:hover { background-color: #374453; }
+    input:hover { background-color: #374453; }
+    textarea:hover { background-color: #374453; }
 }
 
 .form-box {

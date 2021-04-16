@@ -45,6 +45,7 @@ class MethodsController < ApplicationController
     @task = Task.find_by(short: params[:short])
     @method = @task.task_methods.find_by(id: params[:id])
     @method.destroy
+    redirect_to "/tasks/show/#{@task.short}"
   end
 
   def task_method_params

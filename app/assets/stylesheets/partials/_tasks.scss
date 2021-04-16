@@ -42,14 +42,17 @@
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
-    
     background:
-        linear-gradient(#fff,#fff),
-        linear-gradient(#fff,#fff),
+        linear-gradient(#bbbbbb, #bbbbbb),
+        linear-gradient(#bbbbbb, #bbbbbb),
         #313b47;
     background-position:center;
     background-size: 50% 2px, 2px 50%;
     background-repeat:no-repeat;
+}
+
+#t-plus:hover {
+    background-color: #374453;
 }
 
 #t-table {
@@ -124,6 +127,7 @@
     max-width: 15rem;
     background-color:#313b47;
     box-shadow: 0 0 6px rgb(29, 29, 29);
+    border: .2rem solid #3c454b;
     border-radius: .8rem;
     color: #fff;
     padding: 1.4rem;
@@ -140,6 +144,10 @@
         font-size: .8rem;
         color: #bbbbbb;
     }
+}
+
+.method-card:hover {
+    background-color: #374453;
 }
 
 @media only screen and (max-width: 800px) {
