@@ -41,6 +41,12 @@ class MethodsController < ApplicationController
     end
   end
 
+  def destroy
+    @task = Task.find_by(short: params[:short])
+    @method = @task.task_methods.find_by(id: params[:id])
+    @method.destroy
+  end
+
   def task_method_params
     params.require(:task_method).permit(:action_type, :action, :delay)
   end

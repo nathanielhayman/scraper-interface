@@ -31,11 +31,20 @@ class TasksController < ApplicationController
     @tasks = Task.all
     @task = Task.find_by(short: params[:short])
     if @task.update(task_params)
+      if @task.time.hour > Time.now.hour && @task.time.day != Time.now.day
+        @task.update(time: @task.time.change(day: @task.time.day - 1))
+      end
       flash[:success] = 'Task updated.'
-      redirect_to "/tasks"
+      redirect_to "/tasks/show/#{params[:short]}"
     else
       render :edit
     end
+  end
+
+  def destroy
+    @task = Task.find_by(short: params[:short])
+    @task.destroy
+    redirect_to "/"
   end
 
   def text_editor

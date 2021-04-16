@@ -12,13 +12,12 @@
 </div>
 <div id="t-body">
     <div class="t-body-main">
-        <p class="t-clock"><i class="far fa-clock"></i> <b>00:00:00</b> — <%= @task.time.strftime("%l:%M:%S %p") %> 
-            <%= @task.regularity %></p>
         <div class="toggle-container">
             <div class="toggle" id="t-toggle">
                 <div class="toggle-circle"></div>
             </div>
-            <p class="green"><i class="fas fa-check-circle"></i> Running</p>
+            <p class="running-confirm green" style="display: none;"><i class="fas fa-check-circle"></i> Running</p>
+            <p class="stopped-confirm red"><i class="fas fa-times-circle"></i> Stopped</p>
         </div>
         <table id="t-table" style="display: none;">
             <tr>
@@ -47,7 +46,7 @@
                         <%= method.action_type %></h1>
                         <h2><%= method.action %></h2>
                         <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
-                        <div class="t-activity-bar-idle"></div>
+                        <div class="t-activity-bar"></div>
                     </div></a>
                 </div>
                 <% if method != @task.task_methods.last %>

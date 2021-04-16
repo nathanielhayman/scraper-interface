@@ -66,6 +66,20 @@
     }
 }
 
+.running-confirm {
+    overflow: hidden;
+    position: absolute;
+    top: .8rem;
+    left: 4.2rem;
+    padding: .4rem;
+    padding-left: .6rem;
+    margin: 0;
+}
+
+.stopped-confirm {
+    @extend .running-confirm;
+}
+
 .t-clock {
     overflow: hidden;
     position: absolute;
@@ -76,15 +90,10 @@
     color: #bbbbbb;
 }
 
-.t-activity-bar-idle {
+.t-activity-bar {
     height: .1rem;
     border-radius: 1rem;
-    background-color: rgb(85, 228, 104);
-}
-
-.t-activity-bar-active {
-    @extend .t-activity-bar-idle;
-    background-color: rgb(85, 228, 104);
+    background-color: rgb(240, 98, 54);
 }
 
 .t-body-main {
