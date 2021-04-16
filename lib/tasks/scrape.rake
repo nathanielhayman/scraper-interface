@@ -32,11 +32,25 @@ end
 def run_threads(tasks) 
     threads = []
     tasks.each do |task|
-        threads << Thread.new { 
-            puts task.time
-            if task.time - Time.now < 1000
-                puts "#{task.time} - #{Time.now} < 1000"
-                initiate(task)
+        threads << Thread.new {
+            executing = false
+            while true
+                sleep(0.5)
+                task = Task.find_by(short: task.short)
+                if not(executing)
+                    diff = task.time - Time.now
+                    seconds = (diff / 1.second).round + 3600
+                    puts "#{task.time} - #{Time.now} = #{seconds}"
+                    if seconds > 0 && seconds < 2
+                        executing = true
+                        initiate(task)
+                        executing = false
+                    elsif seconds < 0
+                        puts "<0"
+                        # Increment day index of task execution if it has just been run 
+                        task.update(time: task.time.change(day: task.time.day + 1))
+                    end
+                end
             end
         }
     end

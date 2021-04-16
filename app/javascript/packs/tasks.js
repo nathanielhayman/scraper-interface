@@ -1,15 +1,38 @@
+function cascadeChangeMethods(on) {
+    var methods = document.getElementsByClassName('t-activity-bar');
+    Array.from(methods).forEach(method => {
+        setTimeout(() => {
+            if (on) {
+                method.style.backgroundColor = "rgb(85, 228, 104)";
+            } else {
+                method.style.backgroundColor = "";
+            }
+        }, 100);
+    });
+}
+
 function initializeComponents() {
     var toggles = document.getElementsByClassName('toggle');
+    var running = document.getElementsByClassName('running-confirm')[0];
+    var stopped = document.getElementsByClassName('stopped-confirm')[0];
     console.log(toggles);
     console.log("a");
     Array.from(toggles).forEach(toggle => {
         toggle.addEventListener('click', () => {
             if (toggle.id.includes("toggled")) {
-                toggle.childNodes[1].style.right = "";
+                toggle.childNodes[1].style.left = "";
+                toggle.style.backgroundColor = "";
+                running.style.display = "none";
+                stopped.style.display = "block";
                 toggle.id = `${toggle.id.replace("-toggled", "")}`;
+                cascadeChangeMethods(false);
             } else {
-                toggle.childNodes[1].style.right = 0;
+                toggle.childNodes[1].style.left = "53%";
+                toggle.style.backgroundColor = "rgb(85, 228, 104)";
+                running.style.display = "block";
+                stopped.style.display = "none";
                 toggle.id = `${toggle.id}-toggled`;
+                cascadeChangeMethods(true);
             }
         })
     })
