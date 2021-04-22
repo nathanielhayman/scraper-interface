@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   post "/tasks/new",           to: "tasks#create", as: :create_task
   get "/tasks/testing",        to: "tasks#text_editor", as: :text_editor
   delete "/tasks/edit/:short", to: "tasks#destroy", as: :destroy_task
+  get "/tasks/api/:short",     to: "tasks#retrieve", as: :task_api_call
+  post "/tasks/show/:short",   to: "tasks#cmd", as: :task_command
+  post "/tasks/toggle/:short", to: "tasks#toggle", as: :toggle_task
+  post "/tasks/star/:short",   to: "tasks#star", as: :star_task
 
   ## Task Methods
   get "/tasks/show/:short/methods",             to: "methods#index", as: :task_method
