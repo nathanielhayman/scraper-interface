@@ -3,5 +3,5 @@ class Task < ApplicationRecord
 
     validates_uniqueness_of :short
 
-    has_many :task_methods
+    has_many :task_methods, dependent: :delete_all
 end

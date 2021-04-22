@@ -6,6 +6,10 @@ def initiate(task)
     driver = Selenium::WebDriver.for(:chrome, options: options)
     wait = Selenium::WebDriver::Wait.new(:timeout => 10)
 
+    logs = driver.manage.logs.get(:browser)
+
+    variables = task.variables
+
     elm = nil
     task.task_methods.each do |method|
         sleep(method.delay)
@@ -27,6 +31,8 @@ def initiate(task)
     end
 
     driver.quit
+
+    ReportMailer.with(task: task).report_email.deliver_now
 end
 
 def run_threads(tasks) 

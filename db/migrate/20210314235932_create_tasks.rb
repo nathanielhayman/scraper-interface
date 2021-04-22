@@ -6,7 +6,11 @@ class CreateTasks < ActiveRecord::Migration[6.1]
       t.string :short
       t.datetime :time
       t.string :regularity
-      t.string :status, :default => "Running"
+      t.boolean :starred, default: false
+      t.string :status, default: "Running"
+      t.json :variables, default: [], array: true
+      t.json :data, default: [], array: true
+      t.json :logs, default: [], array: true
 
       t.timestamps
     end
