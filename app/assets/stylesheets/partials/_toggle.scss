@@ -1,4 +1,4 @@
-.toggle {
+#t-toggle {
     cursor: pointer;
     position: relative;
     border: .1rem solid #424a4e;
@@ -7,6 +7,20 @@
     height: 1.4rem;
     width: 3rem;
     transition: right 5s;
+}
+
+#t-toggle-toggled {
+    cursor: pointer;
+    position: relative;
+    border: .1rem solid #424a4e;
+    border-radius: 1rem;
+    background-color: rgb(85, 228, 104);
+    height: 1.4rem;
+    width: 3rem;
+    transition: right 5s;
+    .toggle-circle {
+        left: 53%;
+    }
 }
 
 .toggle-container {

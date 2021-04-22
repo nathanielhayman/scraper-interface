@@ -1,3 +1,20 @@
+::-webkit-scrollbar {
+    width: 8px;
+}
+  
+::-webkit-scrollbar-track {
+    background: none;
+}
+   
+::-webkit-scrollbar-thumb {
+    background-color: rgba(65, 78, 80, 0.5);
+    border-radius: 2rem;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(65, 78, 80, 0.75); 
+}
+
 .sd-grid {
     display: flex;
     flex-wrap: wrap;
@@ -5,6 +22,27 @@
 
 .sd-elm {
     padding: 1rem;
+}
+
+#github-link {
+    background-color: #313b47;
+    border-radius: .2rem;
+    overflow: hidden;
+    position: absolute;
+    top: .8rem;
+    right: 1rem;
+    padding: .4rem;
+    padding-left: .6rem;
+    a {
+        padding-right: .1rem;
+        font-size: 1.4rem;
+        color: #bbbbbb;
+        margin: 0;
+    }
+
+    a:hover {
+        color: #ffffff;
+    }
 }
 
 #sd-card {
@@ -17,6 +55,7 @@
     color: #fff;
     padding: 1rem;
     min-width: 14rem;
+    max-width: 18rem;
     h1 {
         font-size: 3rem;
         margin: 0;
@@ -52,7 +91,7 @@
     right: 5%;
 }
 
-#sd-i-exited {
+#sd-i-stopped {
     @extend #sd-i-running;
     background-color: rgb(240, 98, 54);
 }
