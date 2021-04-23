@@ -96,6 +96,7 @@
         line-height: 1rem;
         color: #bbbbbb;
         font-size: .8rem;
+        display: inline;
     }
     h2 {
         font-family: Lucida Console !important;
@@ -104,6 +105,7 @@
     }
     input {
         font-family: Lucida Console !important;
+        width: 90%;
         background-color: #000000;
         color: #bbbbbb;
         outline: none;
