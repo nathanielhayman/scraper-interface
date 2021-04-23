@@ -36,10 +36,16 @@ class TasksController < ApplicationController
   def update
     @tasks = Task.all
     @task = Task.find_by(short: params[:short])
+    @task.time.change(day: Time.now.day)
     if @task.update(task_params)
-      if @task.time.hour > Time.now.hour && @task.time.day != Time.now.day
-        @task.update(time: @task.time.change(day: @task.time.day - 1))
+      @task.update(time: @task.time.change(day: Time.now.day))
+      puts @task.time
+      diff = @task.time - Time.now
+      seconds = (diff / 1.second).round
+      if seconds < 0
+        @task.update(time: task.time.change(day: task.time.day + 1))
       end
+      @task.save
       flash[:success] = 'Task updated.'
       redirect_to "/tasks/show/#{params[:short]}"
     else
@@ -59,8 +65,26 @@ class TasksController < ApplicationController
   end
 
   def cmd
+    cmd_params = [{title: "help", usage: "Returns list of availible commands"}, 
+                {title: "stop", usage: "Stops the task"},
+                {title: "start", usage: "Starts the task"}]
     @task = Task.find_by(short: params[:short])
-    @task.logs.push({time: Time.now, message: "Executed command '#{params[:cmd]}'"})
+    if params[:cmd].downcase.start_with?("help") || params[:cmd].downcase.start_with?("h")
+      message = "Availible commands are: \n"
+      cmd_params.each do |par|
+        message += "  #{par["title"]}: #{par["usage"]}\n"
+      end
+      message += "Any commands not listed above are not currently supported."
+      puts message
+      @task.logs.push({time: Time.now, message: message})
+    elsif params[:cmd].downcase.start_with?("new variable")
+      @task.variables.push({ title: params[:cmd][12..-1].sub!(" ", "") })
+    elsif params[:cmd].downcase == "stop"
+      @task.status = "Stopped"
+      @task.logs.push({time: Time.now, message: "Received stop command"}, {time: Time.now, message: "Task stopped."})
+    else
+      @task.logs.push({time: Time.now, message: "Command '#{params[:cmd]}' not found! Use `help` or `h` to see a list of viable commands."})
+    end
     @task.save
   end
 

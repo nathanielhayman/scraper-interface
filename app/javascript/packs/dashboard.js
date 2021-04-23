@@ -48,6 +48,7 @@ function initializeComponents() {
             type: 'get',
             success: (tsk) => {
                 updateClock(tsk, clock);
+                console.log(tsk);
             },
             error: () => {
                 throw("Unable to contact server!");
