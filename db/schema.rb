@@ -27,10 +27,13 @@ ActiveRecord::Schema.define(version: 2021_03_16_192618) do
     t.string "short"
     t.datetime "time"
     t.string "regularity"
+    t.boolean "starred", default: false
     t.string "status", default: "Running"
+    t.json "variables", default: []
+    t.json "data", default: []
+    t.json "logs", default: []
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "starred"
   end
 
 end
