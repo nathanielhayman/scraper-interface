@@ -25,7 +25,7 @@
             .form-btn { background-color: #bbbbbb; } }
     textarea { background-color: #343c47; border: none; color: #fff; width: 100%;
                border-radius: .2rem; padding: .3rem; }
-    select { background-color: #343c47; border: none; color: #fff; width: 100%; 
+    select { background-color: #343c47; border: none; color: #fff; width: 104%; 
              border-radius: .2rem; padding: .3rem; }
     select:focus { outline:none; background-color: #374453; }
     input:focus { outline:none; background-color: #374453; }
@@ -33,6 +33,19 @@
     select:hover { background-color: #374453; }
     input:hover { background-color: #374453; }
     textarea:hover { background-color: #374453; }
+}
+
+#case-btn {
+    cursor: pointer !important;
+    max-width: 1.2rem;
+    margin-left: 0;
+}
+
+#case-loading {
+    cursor: pointer !important;
+    font-weight: normal;
+    max-width: 1.2rem;
+    margin-left: 0;
 }
 
 .form-box {
@@ -60,3 +73,42 @@
              border-radius: .2rem; padding: .3rem; }
     select:focus { outline:none; }
 }
+
+
+
+// Code below provided by Loading.io (modified) //
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 1px;
+    height: 15px;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: 2px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
