@@ -11,6 +11,7 @@ class CreateTasks < ActiveRecord::Migration[6.1]
       t.json :variables, default: [], array: true
       t.json :data, default: [], array: true
       t.json :logs, default: [], array: true
+      t.json :test_case
 
       t.timestamps
     end

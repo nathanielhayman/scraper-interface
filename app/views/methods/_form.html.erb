@@ -1,11 +1,24 @@
+<%= javascript_pack_tag 'method' %>
 <%= form_for @method, url: "#", method: :post, html: { autocomplete: "off", multipart: true, class: "full-page" } do |f| %>
     <div class="form-entry">
         <%= f.label :action_type, "Type of Method" %><br>
         <%= f.select :action_type, ["GET", "find", "click", "save as", "email"] %>
     </div>
     <div class="form-entry">
-        <%= f.label :action, "Action" %><br>
-        <%= f.text_field :action %>
+        <div id="var-title" style="display: none;"><%= f.label :action, "Variable" %><br></div>
+        <div id="web-title"><%= f.label :action, "Website" %><br></div>
+        <div id="path-title" style="display: none;"><%= f.label :action, "Path" %><br></div>
+        <%= f.text_field :action %><i id="case-btn" class="fas fa-search" style="display: none;"></i><div id="case-loading" class="lds-ring" style="display: none;"><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div id="var-container" style="display: none;">
+        <div class="form-entry">
+            <%= f.label :mod_val, "Index" %><br>
+            <%= f.number_field :mod_val, { default: 0, min: 0 } %>
+        </div>
+        <div class="form-entry">
+            <%= f.label :modifier, "Modifier" %><br>
+            <%= f.select :modifier, ["", "id", "class", "content", "href"], default: "", disabled: "" %>
+        </div>
     </div>
     <div class="form-entry">
         <%= f.label :delay, "Delay (Seconds)" %><br>

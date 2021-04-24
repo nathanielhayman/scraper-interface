@@ -33,6 +33,7 @@ class MethodsController < ApplicationController
     @tasks = Task.all
     @task = Task.find_by(short: params[:short])
     @method = @task.task_methods.find_by(id: params[:id])
+    puts params[:modifier]
     if @method.update(task_method_params)
       flash[:success] = 'Method updated.'
       redirect_to "/tasks"
@@ -49,6 +50,6 @@ class MethodsController < ApplicationController
   end
 
   def task_method_params
-    params.require(:task_method).permit(:action_type, :action, :delay)
+    params.require(:task_method).permit(:action_type, :action, :delay, :modifier, :mod_val)
   end
 end

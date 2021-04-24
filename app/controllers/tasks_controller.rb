@@ -110,6 +110,26 @@ class TasksController < ApplicationController
     @task.save
   end
 
+  def test_search
+    @task = Task.find_by(short: params[:short])
+    @method = @task.task_methods.find_by(id: params[:id])
+
+    path = params[:path]
+    errors = []
+
+    if path[0] === "." && elm != nil
+      path[0] = "/"
+    end
+    begin
+        elms = wait.until { driver.find_elements(:xpath, method.action) }
+    rescue => exception
+        errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+    end
+
+    @task.update(test_case: { results: elms, errors: errors })
+    @task.save
+  end
+
   def text_editor
     @tasks = Task.all
   end

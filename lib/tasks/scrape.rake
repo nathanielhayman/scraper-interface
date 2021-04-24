@@ -13,38 +13,75 @@ def initiate(task)
     errors = []
 
     elm = nil
+    elms = []
+
     task.task_methods.each do |method|
         sleep(method.delay)
         case method.action_type
         when "GET"
             puts "Begin get method"
-            puts method.action
-            driver.get(method.action)
+            if method.action.include? "https://"
+                driver.get(method.action)
+            else
+                driver.get("https://" + method.action)
+            end
         when "find"
             puts "Begin find method"
             if method.action[0] === "." && elm != nil
                 begin
-                    elm = wait.until { elm.find_element(:xpath, method.action) }
+                    elms = wait.until { elm.find_elements(:xpath, method.action) }
                 rescue => exception
                     errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
                 end
             else
                 begin
-                    elm = wait.until { driver.find_element(:xpath, method.action) }
+                    elms = wait.until { driver.find_elements(:xpath, method.action) }
                 rescue => exception
                     errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
                 end
             end
         when "click"
-            elm.click()
-            
+            if elm != nil
+                begin
+                    elm.click() 
+                rescue => exception
+                    errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+                end
+            else
+                errors.push({time: Time.now, message: "ERROR: There is no element available to click! [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+            end
         when "type"
-            elm.send_keys(method.action)
+            if elm != nil
+                begin
+                    elm.send_keys(method.action) 
+                rescue => exception
+                    errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+                end
+            else
+                errors.push({time: Time.now, message: "ERROR: There is no element available to click! [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+            end
         when "save as"
             puts "Begin save method"
             if variables.map { |j| j['title'] if j['title'] == method.action } != nil
-                if elm
-                    current_data.push({variable: method.action, result: "#{elm}"})
+                if elm || elms
+                    if method.modifier
+                        case method.modifier
+                        when "content"
+                            begin
+                                current_data.push({ time: Time.now, variable: method.action, result: "#{elm.text}" })
+                            rescue => exception
+                                errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+                            end
+                        else
+                            begin
+                                current_data.push({ time: Time.now, variable: method.action, result: "#{elm.attribute(method.modifier)}" })
+                            rescue => exception
+                                errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+                            end
+                        end
+                    else
+                        current_data.push({ time: Time.now, variable: method.action, result: "#{elm}" })
+                    end
                 else
                     errors.push({time: Time.now, message: "ERROR: Could not find an element to assign variable #{method.action} to. [#{task.title} : ##{task.task_methods.find_index(method)}]"})
                     break
@@ -54,6 +91,11 @@ def initiate(task)
                 break
             end
         end
+
+        if elms[0]
+            elm = elms[0]
+        end
+
     end
 
     puts "*******"

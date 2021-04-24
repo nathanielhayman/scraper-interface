@@ -28,15 +28,6 @@
                 <p class="stopped-confirm red"><i class="fas fa-times-circle"></i> Stopped</p>
             <% end %>
         </div>
-        <table id="t-table" style="display: none;">
-            <tr>
-                <td class="left">Something</td>
-                <td class="right">Somethingagain</td>
-            </tr>
-            <tr>
-                <td>Something2</th>
-            </tr>
-        </table>
         <div class="t-grid">
             <% @task.task_methods.each do |method| %>
                 <div class="t-elm">
@@ -55,7 +46,11 @@
                             <h1><i class="far fa-question-circle"></i>
                         <% end %>
                         <%= method.action_type %></h1>
-                        <h2><%= method.action %></h2>
+                        <% if method.modifier %>
+                            <h2><%= method.action %>: previous <%= method.modifier %></h2>
+                        <% else %>
+                            <h2><%= method.action %></h2>
+                        <% end %>
                         <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
                         <% if @task.status == "Running" %>
                             <div class="t-activity-bar-r"></div>
@@ -92,6 +87,28 @@
                     <%= f.text_field :cmd %>
                 <% end %>
             </div>
+        </div>
+    </div>
+    <br>
+    <div id="results">
+        <h1>Results</h1>
+        <div id="results-output-container">
+            <table id="t-table">
+                <tr>
+                    <th class="left">Time</th>
+                    <th class="right">Variable</th>
+                    <th class="right">Result</th>
+                </tr>
+                <% @task.data.each do |d| %>
+                    <tr>
+                        <% d["results"].each do |r| %>
+                            <td><%= r["time"].to_time.strftime("%H:%M:%S") %></td>
+                            <td><%= r["variable"] %></td>
+                            <td><%= "#{r["result"]}" %></td>
+                        <% end %>
+                    </tr>
+                <% end %>
+            </table>
         </div>
     </div>
     <br>

@@ -16,6 +16,8 @@ ActiveRecord::Schema.define(version: 2021_03_16_192618) do
     t.string "action_type"
     t.string "action"
     t.integer "delay"
+    t.string "modifier"
+    t.integer "mod_val"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "task_id"
@@ -32,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_192618) do
     t.json "variables", default: []
     t.json "data", default: []
     t.json "logs", default: []
+    t.json "test_case"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
