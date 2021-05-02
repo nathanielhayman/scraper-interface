@@ -53,7 +53,6 @@ def initiate(task)
                         errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
                     end
                 end
-                puts elms[0]
             end
         when "click"
             if !in_logic[0] || (in_logic[0] && result)
@@ -91,7 +90,6 @@ def initiate(task)
                     else
                         variable2 = intermediate['value']
                     end
-                    puts method.mod_val
                     case method.mod_val
                     when ">"
                         begin
@@ -115,9 +113,6 @@ def initiate(task)
                         end
                     when "="
                         begin
-                            puts "AAA"
-                            puts "#{variable1}, #{variable2}"
-                            puts "#{variable1 == variable2}"
                             if variable1 == variable2
                                 result = true
                             else
@@ -129,9 +124,6 @@ def initiate(task)
                     else
                         return
                     end
-
-                    puts result
-
                 end
             end
         when "save as"
@@ -169,9 +161,7 @@ def initiate(task)
                 end
             end
         when "end logic"
-            puts "endl"
             in_logic = in_logic - [true]
-            puts in_logic
         when "email"
             if !in_logic[0] || (in_logic[0] && result)
                 puts "sending email to #{method.action}"
@@ -182,7 +172,6 @@ def initiate(task)
         if elms[0]
             elm = elms[0]
         end
-
     end
 
     puts "*******"
@@ -212,14 +201,11 @@ def run_threads(tasks)
                 if not(executing) && task.status === "Running"
                     diff = task.time - Time.now
                     seconds = (diff / 1.second).round
-                    puts seconds
-                    ##puts "#{task.time}" # - #{Time.now} = #{seconds}"
                     if seconds > 0 && seconds < 2
                         executing = true
                         initiate(task)
                         executing = false
                     elsif seconds < 0
-                        puts "<0"
                         # Increment day index of task execution if it has just been run 
                         task.update(time: task.time.change(day: task.time.day + 1))
                         task.save
