@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_192618) do
     t.string "action"
     t.integer "delay"
     t.string "modifier"
-    t.integer "mod_val"
+    t.string "mod_val"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "task_id"

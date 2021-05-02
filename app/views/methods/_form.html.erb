@@ -1,30 +1,69 @@
 <%= javascript_pack_tag 'method' %>
-<%= form_for @method, url: "#", method: :post, html: { autocomplete: "off", multipart: true, class: "full-page" } do |f| %>
-    <div class="form-entry">
-        <%= f.label :action_type, "Type of Method" %><br>
-        <%= f.select :action_type, ["GET", "find", "click", "save as", "email"] %>
-    </div>
-    <div class="form-entry">
-        <div id="var-title" style="display: none;"><%= f.label :action, "Variable" %><br></div>
-        <div id="web-title"><%= f.label :action, "Website" %><br></div>
-        <div id="path-title" style="display: none;"><%= f.label :action, "Path" %><br></div>
-        <%= f.text_field :action %><i id="case-btn" class="fas fa-search" style="display: none;"></i><div id="case-loading" class="lds-ring" style="display: none;"><div></div><div></div><div></div><div></div></div>
-    </div>
-    <div id="var-container" style="display: none;">
-        <div class="form-entry">
-            <%= f.label :mod_val, "Index" %><br>
-            <%= f.number_field :mod_val, { default: 0, min: 0 } %>
-        </div>
-        <div class="form-entry">
-            <%= f.label :modifier, "Modifier" %><br>
-            <%= f.select :modifier, ["", "id", "class", "content", "href"], default: "", disabled: "" %>
-        </div>
-    </div>
-    <div class="form-entry">
-        <%= f.label :delay, "Delay (Seconds)" %><br>
-        <%= f.number_field :delay, { default: 0, min: 0 } %>
-    </div>
-    <div class="form-entry">
-        <div class="form-btn"><%= f.submit "Submit", id: "form-submit-btn", class: "form-btn", data: { disable_with: 'Submitting...' } %></div>
-    </div>
-<% end %>
+
+<script>
+    var last;
+    $(document).on("click", () => {
+        if (!last) {
+            last = $("#task_method_action_type").find("option:selected").attr("value");
+        }
+        console.log(last);
+        var val = $("#task_method_action_type").find("option:selected").attr("value");
+        console.log(val);
+        if (val != last) {
+            switch (val) {
+                case "logic":
+                    $("#form-container").html(
+                        `<%= render 'logic_form.html.erb'  %>`
+                    );
+                    break;
+                case "save as":
+                    $("#form-container").html(
+                        `<%= render 'variable_form.html.erb'  %>`
+                    );
+                    break;
+                case "GET":
+                    $("#form-container").html(
+                        `<%= render 'website_form.html.erb'  %>`
+                    );
+                    break;
+                case "end logic":
+                    $("#form-container").html(
+                        `<%= render 'end_logic_form.html.erb'  %>`
+                    );
+                    $("#task_method_action").css("display", "none");
+                    break;
+                case "email":
+                    $("#form-container").html(
+                        `<%= render 'email_form.html.erb'  %>`
+                    );
+                    break;
+                default:
+                    $("#form-container").html(
+                        `<%= render 'find_form.html.erb'  %>`
+                    );
+            }
+            //var old =  $("#task_method_action_type").find("option:selected").attr("value");
+            //$("#task_method_action_type").find("option:selected").attr("value", val);
+            //$("#task_method_action_type").find("option:selected").html(val);
+            //$("#task_method_action_type").append(`<option value="${old}">${old}</option>`);
+            //$("#task_method_action_type").find(`option[value="${val}"]`).eq(1).remove();
+            last = val;
+        }
+    });
+</script>
+
+<div id="form-container">
+    <% if @method.action_type == "GET" %>
+        <%= render 'website_form.html.erb' %>
+    <% elsif @method.action_type == "logic" %>
+        <%= render 'logic_form.html.erb' %>
+    <% elsif @method.action_type == "save as" %>
+        <%= render 'variable_form.html.erb' %>
+    <% elsif @method.action_type == "end logic" %>
+        <%= render 'end_logic_form.html.erb' %>
+    <% elsif @method.action_type == "email" %>
+        <%= render 'email_form.html.erb' %>
+    <% else %>
+        <%= render 'find_form.html.erb' %>
+    <% end %>
+</div>

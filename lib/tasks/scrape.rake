@@ -14,81 +14,168 @@ def initiate(task)
 
     elm = nil
     elms = []
+    in_logic = []
+    result = false
 
     task.task_methods.each do |method|
-        sleep(method.delay)
+        if method.delay
+            sleep(method.delay)
+        end
         case method.action_type
         when "GET"
-            puts "Begin get method"
-            if method.action.include? "https://"
-                driver.get(method.action)
-            else
-                driver.get("https://" + method.action)
+            if !in_logic[0] || (in_logic[0] && result)
+                puts "Begin get method"
+                if method.action.include? "https://"
+                    driver.get(method.action)
+                else
+                    driver.get("https://" + method.action)
+                end
             end
         when "find"
-            puts "Begin find method"
-            if method.action[0] === "." && elm != nil
-                begin
-                    elms = wait.until { elm.find_elements(:xpath, method.action) }
-                rescue => exception
-                    errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-                end
-            else
-                begin
-                    elms = wait.until { driver.find_elements(:xpath, method.action) }
-                rescue => exception
-                    errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-                end
-            end
-        when "click"
-            if elm != nil
-                begin
-                    elm.click() 
-                rescue => exception
-                    errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-                end
-            else
-                errors.push({time: Time.now, message: "ERROR: There is no element available to click! [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-            end
-        when "type"
-            if elm != nil
-                begin
-                    elm.send_keys(method.action) 
-                rescue => exception
-                    errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-                end
-            else
-                errors.push({time: Time.now, message: "ERROR: There is no element available to click! [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-            end
-        when "save as"
-            puts "Begin save method"
-            if variables.map { |j| j['title'] if j['title'] == method.action } != nil
-                if elm || elms
-                    if method.modifier
-                        case method.modifier
-                        when "content"
-                            begin
-                                current_data.push({ time: Time.now, variable: method.action, result: "#{elm.text}" })
-                            rescue => exception
-                                errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-                            end
-                        else
-                            begin
-                                current_data.push({ time: Time.now, variable: method.action, result: "#{elm.attribute(method.modifier)}" })
-                            rescue => exception
-                                errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-                            end
+            if !in_logic[0] || (in_logic[0] && result)
+                puts "Begin find method"
+                if method.action[0] === "." && elm != nil
+                    begin
+                        elms = wait.until { elm.find_elements(:xpath, method.action) }
+                        if !elms[0]
+                            errors.push({time: Time.now, message: "ERROR: Could not find the element at '#{method.action}'"})
                         end
-                    else
-                        current_data.push({ time: Time.now, variable: method.action, result: "#{elm}" })
+                    rescue => exception
+                        errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
                     end
                 else
-                    errors.push({time: Time.now, message: "ERROR: Could not find an element to assign variable #{method.action} to. [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+                    begin
+                        elms = wait.until { driver.find_elements(:xpath, method.action) }
+                        if !elms[0]
+                            errors.push({time: Time.now, message: "ERROR: Could not find the element at '#{method.action}'"})
+                        end
+                    rescue => exception
+                        errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                    end
+                end
+                puts elms[0]
+            end
+        when "click"
+            if !in_logic[0] || (in_logic[0] && result)
+                if elm != nil
+                    begin
+                        elm.click() 
+                    rescue => exception
+                        errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                    end
+                else
+                    errors.push({time: Time.now, message: "ERROR: There is no element available to click! [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                end
+            end
+        when "type"
+            if !in_logic[0] || (in_logic[0] && result)
+                if elm != nil
+                    begin
+                        elm.send_keys(method.action) 
+                    rescue => exception
+                        errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                    end
+                else
+                    errors.push({time: Time.now, message: "ERROR: There is no element available to click! [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                end
+            end
+        when "logic"
+            if !in_logic[0] || (in_logic[0] && result)
+                in_logic.push(true)
+                if method.action && method.modifier && method.mod_val
+                    variable1 = variables.find { |v| v['title'] == method.action }['value']
+                    variable2 = nil
+                    intermediate = variables.find { |v| v['title'] == method.modifier }
+                    if intermediate == nil
+                        variable2 = method.modifier
+                    else
+                        variable2 = intermediate['value']
+                    end
+                    puts method.mod_val
+                    case method.mod_val
+                    when ">"
+                        begin
+                            if variable1 > variable2
+                                result = true
+                            else
+                                result = false
+                            end
+                        rescue => exception
+                            
+                        end
+                    when "<"
+                        begin
+                            if variable1 < variable2
+                                result = true
+                            else
+                                result = false
+                            end
+                        rescue => exception
+                            
+                        end
+                    when "="
+                        begin
+                            puts "AAA"
+                            puts "#{variable1}, #{variable2}"
+                            puts "#{variable1 == variable2}"
+                            if variable1 == variable2
+                                result = true
+                            else
+                                result = false
+                            end
+                        rescue => exception
+                            
+                        end
+                    else
+                        return
+                    end
+
+                    puts result
+
+                end
+            end
+        when "save as"
+            if !in_logic[0] || (in_logic[0] && result)
+                puts "Begin save method"
+                if variables.map { |j| j['title'] if j['title'] == method.action } != nil
+                    if elm || elms
+                        if method.modifier
+                            case method.modifier
+                            when "content"
+                                begin
+                                    current_data.push({ time: Time.now, variable: method.action, result: "#{elm}" })
+                                    variables[variables.find_index(variables.find {|v| v["title"] == method.action})]["value"] = elm
+                                rescue => exception
+                                    errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                                end
+                            else
+                                begin
+                                    current_data.push({ time: Time.now, variable: method.action, result: "#{elm.attribute(method.modifier)}" })
+                                    variables[variables.find_index(variables.find {|v| v["title"] == method.action})]["value"] = elm.attribute(method.modifier)
+                                rescue => exception
+                                    errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                                end
+                            end
+                        else
+                            current_data.push({ time: Time.now, variable: method.action, result: "#{elm}" })
+                        end
+                    else
+                        errors.push({time: Time.now, message: "ERROR: Could not find an element to assign variable #{method.action} to. [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                        break
+                    end
+                else
+                    errors.push({time: Time.now, message: "ERROR: Could not find the variable #{method.action}! [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
                     break
                 end
-            else
-                errors.push({time: Time.now, message: "ERROR: Could not find the variable #{method.action}! [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-                break
+            end
+        when "end logic"
+            puts "endl"
+            in_logic = in_logic - [true]
+            puts in_logic
+        when "email"
+            if !in_logic[0] || (in_logic[0] && result)
+                puts "sending email to #{method.action}"
+                ReportMailer.send_report_email(task, method.action, method.modifier, variables).deliver
             end
         end
 

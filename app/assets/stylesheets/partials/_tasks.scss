@@ -45,7 +45,7 @@
     background:
         linear-gradient(#bbbbbb, #bbbbbb),
         linear-gradient(#bbbbbb, #bbbbbb),
-        #313b47;
+        #374453;
     background-position:center;
     background-size: 50% 2px, 2px 50%;
     background-repeat:no-repeat;
@@ -133,6 +133,16 @@
     }
 }
 
+.logic-brace {
+    cursor:  pointer !important;
+    color: #374453;
+    font-size: 8rem;
+    margin: 0;
+    text-align: center;
+    line-height: 8rem;
+    padding-bottom: 2rem;
+}
+
 .running-confirm {
     overflow: hidden;
     position: absolute;
@@ -189,7 +199,7 @@
 .t-elm-arrow {
     @extend .t-elm;
     padding: none;
-    h1 { font-size: 2.2rem; color: #6e6e6e; }
+    h1 { font-size: 2.2rem; color: #374453; }
 }
 
 .method-card {

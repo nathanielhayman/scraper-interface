@@ -36,7 +36,7 @@ class MethodsController < ApplicationController
     puts params[:modifier]
     if @method.update(task_method_params)
       flash[:success] = 'Method updated.'
-      redirect_to "/tasks"
+      redirect_to "/tasks/show/#{@task.short}"
     else
       render :edit
     end

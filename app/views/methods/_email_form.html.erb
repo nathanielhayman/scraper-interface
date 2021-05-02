@@ -1,0 +1,24 @@
+<%= form_for @method, url: "#", method: :post, html: { autocomplete: "off", multipart: true, class: "full-page" } do |f| %>
+    <div id="<%= @task.short %>" class="task-short-report" style="display: none;"></div>
+    <div class="form-entry">
+        <%= f.label :action_type, "Type of Method" %><br>
+        <%= f.select :action_type, ["GET", "find", "click", "save as", "email", "logic", "end logic"], selected: "email" %>
+    </div>
+    <div class="form-entry">
+        <%= f.label :action, "Email Address" %><br>
+        <%= f.text_field :action %> 
+    </div>
+    <div class="form-entry">
+        <%= f.label :modifier, "Message" %><br>
+        <%= f.text_field :modifier %> 
+    </div>
+    <div class="form-entry">
+        <div id="delay">
+            <%= f.label :delay, "Delay (Seconds)" %><br>
+            <%= f.number_field :delay, { default: 0, min: 0 } %>
+        </div>
+    </div>
+    <div class="form-entry">
+        <div class="form-btn"><%= f.submit "Submit", id: "form-submit-btn", class: "form-btn", data: { disable_with: 'Submitting...' } %></div>
+    </div>
+<% end %>

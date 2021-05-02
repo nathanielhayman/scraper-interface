@@ -43,7 +43,7 @@ class TasksController < ApplicationController
       diff = @task.time - Time.now
       seconds = (diff / 1.second).round
       if seconds < 0
-        @task.update(time: task.time.change(day: task.time.day + 1))
+        @task.update(time: @task.time.change(day: @task.time.day + 1))
       end
       @task.save
       flash[:success] = 'Task updated.'
@@ -78,7 +78,7 @@ class TasksController < ApplicationController
       puts message
       @task.logs.push({time: Time.now, message: message})
     elsif params[:cmd].downcase.start_with?("new variable")
-      @task.variables.push({ title: params[:cmd][12..-1].sub!(" ", "") })
+      @task.variables.push({ title: params[:cmd][12..-1].sub!(" ", ""), value: "" })
     elsif params[:cmd].downcase == "stop"
       @task.status = "Stopped"
       @task.logs.push({time: Time.now, message: "Received stop command"}, {time: Time.now, message: "Task stopped."})
@@ -111,23 +111,35 @@ class TasksController < ApplicationController
   end
 
   def test_search
+    options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'no-sandbox'])
+    driver = Selenium::WebDriver.for(:chrome, options: options)
+    wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+
     @task = Task.find_by(short: params[:short])
-    @method = @task.task_methods.find_by(id: params[:id])
 
     path = params[:path]
     errors = []
 
-    if path[0] === "." && elm != nil
-      path[0] = "/"
-    end
     begin
-        elms = wait.until { driver.find_elements(:xpath, method.action) }
-    rescue => exception
-        errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
-    end
+      puts "Running test search..."
 
-    @task.update(test_case: { results: elms, errors: errors })
-    @task.save
+      @get_method = @task.task_methods.find_by(type: "GET")
+      driver.get(@get_method.action)
+
+      if path[0] === "." && elm != nil
+        path[0] = "/"
+      end
+      begin
+          elms = wait.until { driver.find_elements(:xpath, path) }
+      rescue => exception
+          errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)}]"})
+      end
+  
+      @task.update(test_case: { results: elms, errors: errors, pk: params[:pk] })
+      @task.save
+    rescue => exception
+      return
+    end
   end
 
   def text_editor

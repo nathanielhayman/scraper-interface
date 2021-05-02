@@ -5,7 +5,7 @@ class CreateTaskMethods < ActiveRecord::Migration[6.1]
       t.string :action
       t.integer :delay
       t.string :modifier
-      t.integer :mod_val
+      t.string :mod_val
 
       t.timestamps
     end

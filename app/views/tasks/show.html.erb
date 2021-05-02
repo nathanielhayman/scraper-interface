@@ -30,39 +30,52 @@
         </div>
         <div class="t-grid">
             <% @task.task_methods.each do |method| %>
-                <div class="t-elm">
-                    <a href="/tasks/edit/<%= @task.short %>/methods/edit/<%= method.id %>"><div class="method-card">
-                        <% if method.action_type === "GET" %>
-                            <h1><i class="fas fa-link"></i>
-                        <% elsif method.action_type === "find" %>
-                            <h1><i class="fas fa-search"></i>
-                        <% elsif method.action_type === "click" %>
-                            <h1><i class="fas fa-mouse-pointer"></i>
-                        <% elsif method.action_type === "email" %>
-                            <h1><i class="fas fa-envelope"></i>
-                        <% elsif method.action_type === "save as" %>
-                            <h1><i class="fas fa-arrow-circle-down"></i>
-                        <% else %>
-                            <h1><i class="far fa-question-circle"></i>
-                        <% end %>
-                        <%= method.action_type %></h1>
-                        <% if method.modifier %>
-                            <h2><%= method.action %>: previous <%= method.modifier %></h2>
-                        <% else %>
-                            <h2><%= method.action %></h2>
-                        <% end %>
-                        <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
-                        <% if @task.status == "Running" %>
-                            <div class="t-activity-bar-r"></div>
-                        <% else %>
-                            <div class="t-activity-bar-s"></div>
-                        <% end %>
-                    </div></a>
-                </div>
-                <% if method != @task.task_methods.last %>
+                <% if method != @task.task_methods.first && method.action_type != "end logic" %>
                     <div class="t-elm-arrow">
                         <h1><i class="fas fa-arrow-right"></i></h1>
                     </div>
+                <% end %>
+                <% if method.action_type === "end logic" %>
+                    <div class="t-elm">
+                        <a href="/tasks/edit/<%= @task.short %>/methods/edit/<%= method.id %>"><p class="logic-brace">]</p></a>
+                    </div>
+                <% else %>
+                    <div class="t-elm">
+                        <a href="/tasks/edit/<%= @task.short %>/methods/edit/<%= method.id %>"><div class="method-card">
+                            <% if method.action_type === "GET" %>
+                                <h1><i class="fas fa-link"></i>
+                            <% elsif method.action_type === "find" %>
+                                <h1><i class="fas fa-search"></i>
+                            <% elsif method.action_type === "click" %>
+                                <h1><i class="fas fa-mouse-pointer"></i>
+                            <% elsif method.action_type === "email" %>
+                                <h1><i class="fas fa-envelope"></i>
+                            <% elsif method.action_type === "save as" %>
+                                <h1><i class="fas fa-arrow-circle-down"></i>
+                            <% elsif method.action_type === "logic" %>
+                                <h1><i class="fas fa-code"></i>
+                            <% else %>
+                                <h1><i class="far fa-question-circle"></i>
+                            <% end %>
+                            <%= method.action_type %></h1>
+                            <% if method.action_type === "logic" && method.modifier %>
+                                <h2><% method.mod_val %></h2>
+                            <% else %>
+                                <h2><%= method.action %></h2>
+                            <% end %>
+                            <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
+                            <% if @task.status == "Running" %>
+                                <div class="t-activity-bar-r"></div>
+                            <% else %>
+                                <div class="t-activity-bar-s"></div>
+                            <% end %>
+                        </div></a>
+                    </div>
+                    <% if method.action_type === "logic" %>
+                        <div class="t-elm">
+                            <a href="/tasks/edit/<%= @task.short %>/methods/edit/<%= method.id %>"><p class="logic-brace">[</p></a>
+                        </div>
+                    <% end %>
                 <% end %>
             <% end %>
             <div class="t-elm" style="margin-up: auto; margin-down: auto;">
