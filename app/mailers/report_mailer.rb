@@ -10,6 +10,6 @@ class ReportMailer < ApplicationMailer
             task.errors.push({time: Time.now, message: "ERROR: variable '#{variable}' cannot be found! (Check your email methods)"})
         end
         @message = style.gsub("%#{variable}%", result)    
-        mail(to: "natebvsd@gmail.com", subject: "A scraper report is available!")
+        mail(to: user, subject: "A scraper report is available!")
     end
 end
