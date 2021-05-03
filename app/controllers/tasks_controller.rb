@@ -47,7 +47,7 @@ class TasksController < ApplicationController
       end
       @task.save
       flash[:success] = 'Task updated.'
-      redirect_to "/tasks/show/#{params[:short]}"
+      redirect_to "/tasks"
     else
       render :edit
     end

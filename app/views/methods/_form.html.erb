@@ -37,6 +37,11 @@
                         `<%= render 'email_form.html.erb'  %>`
                     );
                     break;
+                case "click":
+                    $("#form-container").html(
+                        `<%= render 'click_form.html.erb'  %>`
+                    );
+                    break;
                 default:
                     $("#form-container").html(
                         `<%= render 'find_form.html.erb'  %>`

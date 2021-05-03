@@ -61,7 +61,11 @@
                             <% if method.action_type === "logic" && method.modifier %>
                                 <h2><% method.mod_val %></h2>
                             <% else %>
-                                <h2><%= method.action %></h2>
+                                <% if method.action.length > 30 %>
+                                    <h2><%= method.action[0..30]... %>
+                                <% else %>
+                                    <h2><%= method.action %></h2>
+                                <% end %>
                             <% end %>
                             <p><i class="far fa-clock"></i> <%= method.delay %> second delay</p>
                             <% if @task.status == "Running" %>

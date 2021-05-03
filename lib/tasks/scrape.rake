@@ -49,6 +49,7 @@ def initiate(task)
                         if !elms[0]
                             errors.push({time: Time.now, message: "ERROR: Could not find the element at '#{method.action}'"})
                         end
+                        puts elms[0].attribute("innerHTML")
                     rescue => exception
                         errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
                     end
@@ -56,7 +57,24 @@ def initiate(task)
             end
         when "click"
             if !in_logic[0] || (in_logic[0] && result)
-                if elm != nil
+                if method.action
+                    if method.action[0] == "." && elm != nil
+                        puts "using ."
+                        begin
+                            elm = wait.until { elm.find_element(:xpath, method.action) }
+                            elm.click()
+                        rescue => exception
+                            errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                        end
+                    else
+                        begin
+                            elm = wait.until { driver.find_element(:xpath, method.action) }
+                            elm.click()
+                        rescue => exception
+                            errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
+                        end
+                    end
+                elsif elm != nil
                     begin
                         elm.click() 
                     rescue => exception
@@ -79,6 +97,7 @@ def initiate(task)
                 end
             end
         when "logic"
+            puts "Begin logic"
             if !in_logic[0] || (in_logic[0] && result)
                 in_logic.push(true)
                 if method.action && method.modifier && method.mod_val
@@ -93,7 +112,7 @@ def initiate(task)
                     case method.mod_val
                     when ">"
                         begin
-                            if variable1 > variable2
+                            if variable1.to_i > variable2.to_i
                                 result = true
                             else
                                 result = false
@@ -103,7 +122,7 @@ def initiate(task)
                         end
                     when "<"
                         begin
-                            if variable1 < variable2
+                            if variable1.to_i < variable2.to_i
                                 result = true
                             else
                                 result = false
@@ -113,6 +132,7 @@ def initiate(task)
                         end
                     when "="
                         begin
+                            puts "#{variable1} = #{variable2}?"
                             if variable1 == variable2
                                 result = true
                             else
@@ -135,8 +155,8 @@ def initiate(task)
                             case method.modifier
                             when "content"
                                 begin
-                                    current_data.push({ time: Time.now, variable: method.action, result: "#{elm}" })
-                                    variables[variables.find_index(variables.find {|v| v["title"] == method.action})]["value"] = elm
+                                    current_data.push({ time: Time.now, variable: method.action, result: "#{elm.text}" })
+                                    variables[variables.find_index(variables.find {|v| v["title"] == method.action})]["value"] = elm.text
                                 rescue => exception
                                     errors.push({time: Time.now, message: "ERROR: The scraper encountered the following exception during execution: #{exception} [#{task.title} : ##{task.task_methods.find_index(method)+1}]"})
                                 end
@@ -163,6 +183,9 @@ def initiate(task)
         when "end logic"
             in_logic = in_logic - [true]
         when "email"
+            puts "Begin email"
+            puts in_logic[0]
+            puts result
             if !in_logic[0] || (in_logic[0] && result)
                 puts "sending email to #{method.action}"
                 ReportMailer.send_report_email(task, method.action, method.modifier, variables).deliver
@@ -201,6 +224,7 @@ def run_threads(tasks)
                 if not(executing) && task.status === "Running"
                     diff = task.time - Time.now
                     seconds = (diff / 1.second).round
+                    puts seconds
                     if seconds > 0 && seconds < 2
                         executing = true
                         initiate(task)
